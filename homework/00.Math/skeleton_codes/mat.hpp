@@ -26,14 +26,14 @@ namespace kmuvcl {
       {
         // TODO: Fill up this function properly 
         // Notice: The matrix is column major
-        return  val[0];
+        return  val[r + c*M];
       }
 
       const T& operator()(unsigned int r, unsigned int c) const
       {
         // TODO: Fill up this function properly 
         // Notice: The matrix is column major
-        return  val[0];   
+        return  val[r + c*M];   
       }
 
       // type casting operators
@@ -49,34 +49,60 @@ namespace kmuvcl {
 
       void set_to_zero()
       {
-        // TODO: Fill up this function properly 
+        // TODO: Fill up this function properly
+        // m03
+        for(int i=0; i<M*N; i++)
+        {
+          val[i] = 0;
+        }
       }
 
       void get_ith_column(unsigned int i, vec<M, T>& col) const
       {
         // TODO: Fill up this function properly 
+        for(int j=0; j<M; ++j)
+        {
+          col(j) = (*this)(j,i);
+        }
       }
 
       void set_ith_column(unsigned int i, const vec<M, T>& col)
       {
         // TODO: Fill up this function properly 
+        for(int j=0; j<M; ++j)
+        {
+          (*this)(j,i) = col(j);
+        }
       }
 
       void get_ith_row(unsigned int i, vec<N, T>& row) const
       {
        // TODO: Fill up this function properly 
+       for(int j=0; j<N; j++)
+        {
+          row(j) = (*this)(i,j);
+        }
       }
 
       void set_ith_row(unsigned int i, const vec<N, T>& row)
       {
         // TODO: Fill up this function properly 
+        for(int j=0; j<N; j++)
+        {
+          (*this)(i,j) = row(j);
+        }
       }
 
       mat<N, M, T> transpose() const
       {
         // TODO: Fill up this function properly 
         mat<N, M, T>  trans;
-        
+        vec<M, T> tmp;
+        for(int i=0; i<N; i++)
+        {
+          (*this).get_ith_column(i, tmp);
+          trans.set_ith_row(i, tmp);
+        }        
         return  trans;
       }
 
