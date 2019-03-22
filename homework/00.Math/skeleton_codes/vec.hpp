@@ -18,45 +18,69 @@ namespace kmuvcl {
 
       vec(const T elem)
       {
-        // TODO: Fill up this function properly 
+        // TODO: Fill up this function properly
+        for(int i=0; i<N; ++i)
+        {
+          val[i] = elem;
+        }
       }
 
       vec(const T s, const T t) : vec()
       {
-        // TODO: Fill up this function properly 
+        // TODO: Fill up this function properly
+        val[0] = s;
+        val[1] = t;
       }
 
       vec(const T s, const T t, const T u) : vec()
       {
         // TODO: Fill up this function properly 
+        val[0] = s;
+        val[1] = t;
+        val[2] = u;
       }
 
       vec(const T s, const T t, const T u, const T v) : vec()
       {
         // TODO: Fill up this function properly 
+        val[0] = s;
+        val[1] = t;
+        val[2] = u;
+        val[3] = v;
       }
       
       vec(const vec<N, T>& other)
       {
         // TODO: Fill up this function properly 
+        for(int i=0; i<N; i++)
+        {
+          (*this).val[i] = other.val[i];
+        }
       }
 
       vec& operator= (const vec<N, T>& other)
       {
         // TODO: Fill up this function properly 
+        if(*this != other)
+        {
+          for(int i=0; i<N; i++)
+          {
+            (*this).val[i]= other.val[i];
+          }
+        }
         return  *this;
       }
 
       T& operator()(unsigned int i)
       {
 	      // TODO: Fill up this function properly 
-        return  val[0];
+        return  val[i];
       }
 
       const T& operator()(unsigned int i) const
       {
 	      // TODO: Fill up this function properly 
-        return  val[0];
+        return  val[i];
       }
 
       // type casting operators
@@ -73,18 +97,24 @@ namespace kmuvcl {
       vec& operator+=(const vec<N, T>& other)
       {
         // TODO: Fill up this function properly 
+        *this = *this + other;
         return *this;
       }
 
       vec& operator-=(const vec<N, T>& other)
       {
         // TODO: Fill up this function properly 
+        *this = *this - other;
         return *this;
       }
 
       void set_to_zero()
       {
         // TODO: Fill up this function properly 
+        for(int i=0; i<N; i++)
+        {
+          val[i] = 0;
+        }
       }
 
     protected:
