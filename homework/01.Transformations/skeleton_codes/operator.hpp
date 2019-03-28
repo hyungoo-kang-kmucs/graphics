@@ -113,7 +113,7 @@ namespace kmuvcl {
 
         for (unsigned int j = 0; j < L; ++j)
         {
-	  B.get_ith_column(j, col);
+	        B.get_ith_column(j, col);
           C(i,j) = dot(row, col);
         }
       }
