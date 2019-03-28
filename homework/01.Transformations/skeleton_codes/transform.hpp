@@ -151,6 +151,17 @@ namespace kmuvcl
            mat<4, 4, T> frustumMat;
 
            // TODO: Fill up this function properly 
+           frustumMat(0,0) = (2*nearVal)/(right-left);
+           frustumMat(0,2) = (right+left)/(right-left);
+
+           frustumMat(1,1) = (2*nearVal)/(top-bottom);
+           frustumMat(1,2) = (top+bottom)/(top-bottom);
+
+           frustumMat(2,2) = -(farVal+nearVal)/(farVal-nearVal);
+           frustumMat(2,3) = -(2*farVal*nearVal)/(farVal-nearVal);
+
+           frustumMat(3,2) = -1;
+
 
            return frustumMat;
         }
@@ -162,6 +173,9 @@ namespace kmuvcl
           T  top = 0;
 
           // TODO: Fill up this function properly 
+          T theta = (fovy*M_PI)/ 180;
+          top = zNear * tan(theta/2);
+          right = top * aspect;
 
           return frustum(-right, right, -top, top, zNear, zFar);
         }
