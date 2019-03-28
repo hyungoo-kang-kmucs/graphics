@@ -57,20 +57,11 @@ namespace kmuvcl
             // camPos 열벡터 선언
             vec<3, T> camPos;
 
-            // camAxis 연산 
-            // vec(cam_z_axis) = norm vec(cX-eX, cY-eY, cZ-eZ)
+            // camAxis 1 of 3) vec(cam_z_axis) = norm( vec(cX-eX, cY-eY, cZ-eZ) )
             vec<3, T> sub;
-            // sub(0) = centerX - eyeX;
-            // sub(1) = centerY - eyeY;
-            // sub(2) = centerZ - eyeZ;
             sub(0) = -(centerX - eyeX);
             sub(1) = -(centerY - eyeY);
             sub(2) = -(centerZ - eyeZ);
-            // sub(0) = abs(centerX - eyeX);
-            // sub(1) = abs(centerY - eyeY);
-            // sub(2) = abs(centerZ - eyeZ);
-
-            //단위벡터화
 
             T norm;
             norm = sqrt(pow(sub(0), 2) + pow(sub(1),2) + pow(sub(2),2));
@@ -80,13 +71,11 @@ namespace kmuvcl
                 cam_z_axis(i) = (sub(i)/norm) ;
             }
 
-            // vec(cam_x_axis) = vec(upX upY upZ) X vec(cam_z_axis)
+            // camAxis 2 of 3) vec(cam_x_axis) = norm( vec(upX,upY,upZ) X vec(cam_z_axis) )
             vec<3, T> up;
             up(0) = upX;
             up(1) = upY;
             up(2) = upZ;
-
-            //단위벡터화
 
             sub = cross(up, cam_z_axis);
             norm = sqrt(pow(sub(0), 2) + pow(sub(1),2) + pow(sub(2),2));
@@ -96,9 +85,7 @@ namespace kmuvcl
                 cam_x_axis(i) = (sub(i)/norm) ;
             }
 
-            // vec(cam_y_axis) = vec(cam_z_axis) X vec(cam_x_axis)
-            //단위벡터화
-
+            // camAxis 3 of 3) vec(cam_y_axis) = norm( vec(cam_z_axis) X vec(cam_x_axis) )
             sub = cross(cam_z_axis, cam_x_axis);
             norm = sqrt(pow(sub(0), 2) + pow(sub(1),2) + pow(sub(2),2));
             
@@ -107,12 +94,12 @@ namespace kmuvcl
                 cam_y_axis(i) = (sub(i)/norm) ;
             }
 
-            // camPos 연산
+            // camPos
             camPos(0) = -eyeX;
             camPos(1) = -eyeY;
             camPos(2) = -eyeZ;
 
-            // result 1
+            // result 1: camAxis(3x3)
             camAxis.set_ith_row(0,cam_x_axis);
             camAxis.set_ith_row(1,cam_y_axis);
             camAxis.set_ith_row(2,cam_z_axis);
@@ -130,6 +117,8 @@ namespace kmuvcl
             {
                 viewMat(i,3)= (camAxis*camPos)(i);
             }
+
+            // result 3: etc
             viewMat(3,3) = 1;
 
             return viewMat;
